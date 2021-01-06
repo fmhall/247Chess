@@ -1,0 +1,21 @@
+247Chess stream
+
+Initial Idea:
+I think a 24/7 YouTube stream that streams top grandmaster games from live chess + chill music in the background, with a dynamic title depending on who its following would be great content. It could be something people fall asleep to or go to chat with the community
+If it picks up, there’s potential for ad revenue too
+Unlimited content
+It’s like lichess tv but more community oriented
+
+Implementation Details:
+Two ways:
+First way:
+Find a way to follow top player in time control
+Get the usernames of those players
+Get real names of those players
+Modify title of stream
+Second way:
+Get leaderboard on an interval
+Starting from top, query endpoint to see if they are playing live
+If they are, get the live game link and display it somehow.
+Get the players names and modify the title of the stream.
+If they stop playing, repeat the process
