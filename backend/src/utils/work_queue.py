@@ -3,6 +3,7 @@ from typing import Deque, Dict, Optional, Set, List
 import logging
 from models import Work
 from utils.chess_utils import load_games_from_file
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +23,10 @@ class WorkQueue:
         self.work_deque.append(item)
         print(item)
 
+    def add_work_item_to_back(self, item: Work):
+        self.work_deque.appendleft(item)
+        print(item)
+
     def get_next_work_item(self) -> Optional[Work]:
         if self.work_deque:
             return self.work_deque.pop()
@@ -31,6 +36,7 @@ class WorkQueue:
 
 
 work_queue = WorkQueue()
-work_list = load_games_from_file("famous", num_games=10)
+work_list = load_games_from_file("famous", num_games=2)
+random.shuffle(work_list)
 for work in work_list:
     work_queue.add_work_item(work)

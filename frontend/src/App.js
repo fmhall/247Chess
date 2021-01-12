@@ -14,9 +14,11 @@ function App() {
     const [blackPlayer, setBlackPlayer] = useState(null);
 
     function onNewHeaders(headers) {
+        console.log(JSON.stringify(headers))
         setHeaders(headers.headers)
         setBlackPlayer(headers.black)
         setWhitePlayer(headers.white)
+        setLastAnno('')
     }
 
     function mount() {

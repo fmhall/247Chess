@@ -1,17 +1,17 @@
 import asyncio
 import logging
-from datetime import datetime, timedelta
 import models
 from typing import Optional
 from utils.work_queue import work_queue
 import json
+import random
 
 logger = logging.getLogger(__name__)
 logger.setLevel("DEBUG")
 """
 Get status as an event generator
 """
-status_stream_delay = 3  # second
+status_stream_delay = 10  # second
 status_stream_retry_timeout = 30000  # milisecond
 
 
@@ -35,10 +35,11 @@ async def status_event_generator(request):
                 else:
                     work.completed = True
             else:
-                logger.debug("Getting new game")
-                work = work_queue.get_next_work_item()
-                move_number = 0
+                work.completed = False
+                work_queue.add_work_item_to_back(work)
+                work = None
         else:
+            logger.debug("Getting new game")
             work = work_queue.get_next_work_item()
             move_number = 0
             if not work:
@@ -48,4 +49,4 @@ async def status_event_generator(request):
                 logger.debug(work.get_game_data())
                 yield {"event": "new_game", "data": json.dumps(work.get_game_data())}
 
-        await asyncio.sleep(status_stream_delay)
+        await asyncio.sleep(status_stream_delay + random.randint(-5, 5))
