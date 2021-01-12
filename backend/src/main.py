@@ -8,8 +8,16 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import models
+from uvicorn.config import LOGGING_CONFIG
 
-logger = logging.getLogger(__name__)
+# setup loggers
+logging.config.fileConfig("logging.conf", disable_existing_loggers=False)
+
+# get root logger
+logger = logging.getLogger(
+    __name__
+)  # the __name__ resolve to "main" since we are at the root of the project.
+# This will get the root logger since no logger in the configuration has this name.
 
 app = FastAPI()
 
@@ -24,14 +32,12 @@ app.add_middleware(
 router = APIRouter()
 
 
-@router.get('/status/stream')
-async def runStatus(
-        request: Request,
-        response: Response
-):
+@router.get("/status/stream")
+async def runStatus(request: Request, response: Response):
     event_generator = status_event_generator(request)
     response.headers["Access-Control-Allow-Origin"] = "*"
     return EventSourceResponse(event_generator)
+
 
 app.include_router(router)
 

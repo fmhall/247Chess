@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from dataclasses import dataclass
 from typing import Dict, Optional, List, Any
 from uuid import UUID
 import uuid
@@ -12,11 +13,56 @@ def random_string(string_length=8):
     return "".join(random.choice(letters) for _ in range(string_length))
 
 
-class Work(BaseModel):
+@dataclass
+class PlayerInfo:
+    name: str
+    sub_text: str = "???? - ????"
+    image_url: str = "http://www.osimira.com/wp-content/uploads/2016/02/bgr_11-620x330.jpg"
+
+
+@dataclass
+class Headers:
+    date: str
+    event: str
+    white: str
+    black: str
+
+
+def headers_from_game(game: chess.pgn.GameT) -> Headers:
+    headers = Headers(
+        date=game.headers["Date"],
+        event=game.headers["Event"],
+        white=game.headers["White"],
+        black=game.headers["Black"],
+    )
+    return headers
+
+
+@dataclass
+class Work:
     game: chess.pgn.GameT
+    fen_list: List[str]
+    annotation_list: List[str]
+    move_list: List[List[str]]
     completed: bool
+    headers: Headers
+    white_player_info: Optional[PlayerInfo] = None
+    black_player_info: Optional[PlayerInfo] = None
+
+    def get_update(self, move_number):
+        return {
+            "fen": self.fen_list[move_number],
+            "uci": self.move_list[move_number],
+            "anno": self.annotation_list[move_number],
+        }
+
+    def get_game_data(self):
+        return {
+            "headers": self.headers.__dict__,
+            "white": self.white_player_info.__dict__,
+            "black": self.black_player_info.__dict__,
+        }
 
 
 class PgnRequest(BaseModel):
     pgn: str
-

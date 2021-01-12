@@ -6,7 +6,7 @@ If it picks up, there’s potential for ad revenue too
 Unlimited content
 It’s like lichess tv but more community oriented
 
-Implementation Details:
+Chess.com Implementation details
 Two ways:
 First way:
 Find a way to follow top player in time control

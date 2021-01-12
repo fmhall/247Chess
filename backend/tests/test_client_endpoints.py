@@ -1,17 +1,12 @@
-import os
-import json
 import requests
-from dotenv import load_dotenv
 import logging
 from fastapi.testclient import TestClient
-from nemo.main import app
-from nemo import utils
+from main import app
 
 client = TestClient(app)
 
 logger = logging.getLogger(__name__)
-load_dotenv()
-PLAYER = os.getenv("PLAYER")
+PLAYER = "synapz"
 URL = f"https://lichess.org/api/games/user/{PLAYER}"
 
 
@@ -21,9 +16,10 @@ def get_game_from_lichess() -> str:
 
 
 def test_post_game():
-
     data: str = get_game_from_lichess()
     logger.debug(data)
-    r = client.post("/game", json={"pgn": "{" + data + "}", "check_cloud": False})
-    logger.debug(r.text)
+    r = client.post("/game", json={"pgn": "{" + data + "}"})
     assert r.status_code == 201
+
+
+test_post_game()
