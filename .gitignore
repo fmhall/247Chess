@@ -1,0 +1,7 @@
+.idea/
+backend/env
+backend/src/__pycache__/
+backend/src/utils/__pycache__/
+backend/src/utils/famous/
+backend/src/utils/synapz_new/
+frontend/node_modules
