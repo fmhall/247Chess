@@ -9,7 +9,9 @@ import { Row, Col, Container } from 'react-bootstrap';
 function App() {
     const [update, setUpdate] = useState(null);
     const [headers, setHeaders] = useState(null);
+    const [lastMove, setLastMove] = useState([]);
     const [lastAnno, setLastAnno] = useState('');
+    const [currentFen, setCurrentFen] = useState('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR');
     const [whitePlayer, setWhitePlayer] = useState(null);
     const [blackPlayer, setBlackPlayer] = useState(null);
 
@@ -19,6 +21,8 @@ function App() {
         setBlackPlayer(headers.black)
         setWhitePlayer(headers.white)
         setLastAnno('')
+        setLastMove([])
+        setCurrentFen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
     }
 
     function mount() {
@@ -27,8 +31,10 @@ function App() {
             // Logic to handle status updates
             let obj = JSON.parse(event.data)
             setUpdate(obj)
-            if (obj.anno) {
-                setLastAnno(obj.anno)
+            setLastAnno(obj.anno)
+            setLastMove(obj.uci)
+            if (obj.fen) {
+                setCurrentFen(obj.fen)
             }
             });
         evtSource.addEventListener("end", function(event) {
@@ -43,19 +49,16 @@ function App() {
     }
     useEffect(() => {
         mount()}, [])
-    console.log(update)
     return (
     <div className="App">
         <Container fluid>
         <Row>
             <Col className="board-col">
-                {update ? (
                   <Col lg="6" className="col-4 d-flex justify-content-center text-center">
                       <Row className="board">
-                          <Chessground fen={update["fen"]} lastMove={update.uci}/>
+                          <Chessground fen={currentFen} lastMove={lastMove}/>
                       </Row>
                     </Col>
-                  ) : (<></>)}
             </Col>
             <Col className="headers-and-annotation-col">
                 {headers && whitePlayer && blackPlayer ? (
@@ -87,9 +90,6 @@ function App() {
                         <br/>
                         <br/>
                         <br/>
-                        <Row lg={1} className="headers-and-annotation-col">
-                                Last Annotation:
-                        </Row>
                         <Row className="text-center text-wrap annotation">
                             {lastAnno}
                         </Row>

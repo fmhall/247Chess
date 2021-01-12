@@ -11,7 +11,7 @@ logger.setLevel("DEBUG")
 """
 Get status as an event generator
 """
-status_stream_delay = 10  # second
+status_stream_delay = 8  # second
 status_stream_retry_timeout = 30000  # milisecond
 
 
@@ -19,6 +19,8 @@ async def status_event_generator(request):
     work: Optional[models.Work] = None
     move_number = 0
     while True:
+        has_annotation = False
+        is_new_game = False
         if await request.is_disconnected():
             logger.debug("Request disconnected")
             break
@@ -26,10 +28,13 @@ async def status_event_generator(request):
             if not work.completed:
                 if move_number < len(work.fen_list):
                     logger.debug(work.get_update(move_number))
+                    data = work.get_update(move_number)
+                    if data["anno"]:
+                        has_annotation = True
                     yield {
                         "event": "update",
                         "retry": status_stream_retry_timeout,
-                        "data": json.dumps(work.get_update(move_number)),
+                        "data": json.dumps(data),
                     }
                     move_number += 1
                 else:
@@ -48,5 +53,14 @@ async def status_event_generator(request):
             else:
                 logger.debug(work.get_game_data())
                 yield {"event": "new_game", "data": json.dumps(work.get_game_data())}
+                is_new_game = True
 
-        await asyncio.sleep(status_stream_delay + random.randint(-5, 5))
+        if is_new_game:
+            delay = 2
+        elif has_annotation:
+            delay = 20
+        elif move_number < 15:
+            delay = 5 + random.randint(-2, 2)
+        else:
+            delay = status_stream_delay + random.randint(-5, 5)
+        await asyncio.sleep(delay)
