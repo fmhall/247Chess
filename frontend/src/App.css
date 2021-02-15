@@ -7,7 +7,7 @@
   /*align-items: center;*/
   /*justify-content: center;*/
   height: 100%;
-  min-height: 3000px;
+  min-height: 500vh;
 }
 
 .App-logo {
@@ -53,6 +53,10 @@
     transform: rotate(360deg);
   }
 }
+
+.text-middle {
+  padding-top: 5%;
+}
 .board-col {
   padding: 5%;
   margin-left: 1%;
@@ -67,14 +71,14 @@
 .annotation {
   font-size: 20px;
   color: white;
-  height: 400px;
+  height: 5vh;
   align-items: center;
   justify-content: center;
   padding: 5%;
 }
 
 .height-style {
-  height: 800px;
+  height: 60vh;
 }
 .headers-and-annotation-col {
   padding: 5%;
@@ -82,5 +86,5 @@
   /*align-items: center;*/
   /*justify-content: center;*/
   font-size: calc(10px + 2vmin);
-  width: 800px;
+  width: 10px;
 }

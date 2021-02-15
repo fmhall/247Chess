@@ -55,7 +55,7 @@ function App() {
             <Col className="board-col">
                   <Col lg="6" className="col-4 d-flex justify-content-center text-center">
                       <Row className="board">
-                          <Chessground width={800} height={800} fen={currentFen} lastMove={lastMove}/>
+                          <Chessground fen={currentFen} lastMove={lastMove}/>
                       </Row>
                     </Col>
             </Col>
@@ -64,21 +64,17 @@ function App() {
                     <Row lg={1} className="text-middle">
                         <Row>
                               <Col>
-                                  <img src={whitePlayer.image_url} alt={"white"} width="220" height="220" />
+                                  <img src={whitePlayer.image_url} alt={"white"} width="180vh" height="180vh" />
                               </Col>
                               <Col>
-                              </Col>
-                              <Col>
-                                  <img src={blackPlayer.image_url} alt={"black"} width="220" height="220" />
+                                  <img src={blackPlayer.image_url} alt={"black"} width="180vh" height="180vh" />
                               </Col>
                           </Row>
                           <Row>
                               <Col>
                                   {whitePlayer.name}
                               </Col>
-                              <Col>
-                                  vs.
-                              </Col>
+
                               <Col>
                                   {blackPlayer.name}
                               </Col>
@@ -86,7 +82,6 @@ function App() {
                         <Row>
                             {headers.date.includes('?') ? null : headers.date}
                         </Row>
-                        <br/>
                         <Row className="text-center text-wrap annotation">
                             {lastAnno}
                         </Row>
