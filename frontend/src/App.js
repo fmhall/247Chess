@@ -85,7 +85,7 @@ function App() {
                               </Col>
                           </Row>
                         <Row lg={1} className="headers-and-annotation-col">
-                            {headers.date}
+                            {headers.date.includes('?') ? null : headers.date}
                         </Row>
                         <br/>
                         <br/>
