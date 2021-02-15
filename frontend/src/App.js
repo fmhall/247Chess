@@ -51,18 +51,17 @@ function App() {
         mount()}, [])
     return (
     <div className="App">
-        <Container fluid>
-        <Row>
+        <Row className="height-style">
             <Col className="board-col">
                   <Col lg="6" className="col-4 d-flex justify-content-center text-center">
                       <Row className="board">
-                          <Chessground fen={currentFen} lastMove={lastMove}/>
+                          <Chessground width={800} height={800} fen={currentFen} lastMove={lastMove}/>
                       </Row>
                     </Col>
             </Col>
             <Col className="headers-and-annotation-col">
                 {headers && whitePlayer && blackPlayer ? (
-                    <Row lg={1} className="text-center">
+                    <Row lg={1} className="text-middle">
                         <Row>
                               <Col>
                                   <img src={whitePlayer.image_url} alt={"white"} width="220" height="220" />
@@ -84,11 +83,9 @@ function App() {
                                   {blackPlayer.name}
                               </Col>
                           </Row>
-                        <Row lg={1} className="headers-and-annotation-col">
+                        <Row>
                             {headers.date.includes('?') ? null : headers.date}
                         </Row>
-                        <br/>
-                        <br/>
                         <br/>
                         <Row className="text-center text-wrap annotation">
                             {lastAnno}
@@ -96,7 +93,6 @@ function App() {
                   </Row>) : (<></>)}
             </Col>
         </Row>
-        </Container>
     </div>
     );
 }
