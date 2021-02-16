@@ -80,7 +80,7 @@ function App() {
                           </Col>
                         </Row>
                         <Row className="date">
-                            {headers.date.includes('?') ? headers.date.slice(0, headers.date.indexOf('.?')) : headers.date}
+                            {headers.combined}
                         </Row>
                         <Row className="text-center text-wrap annotation">
                             {lastAnno}

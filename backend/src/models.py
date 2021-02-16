@@ -26,14 +26,26 @@ class PlayerInfo:
 class Headers:
     date: str
     event: str
+    round: str
     white: str
     black: str
+
+    def get_headers(self):
+        if self.date.find(".?") >= 0:
+            date = self.date[: self.date.find(".?")]
+        else:
+            date = ""
+        event = self.event if "?" not in self.event else ""
+        round_num = "Round " + self.round if "?" not in self.round else ""
+        combined = " - ".join([date, event, round_num]).rstrip(" - ")
+        return {**self.__dict__, "combined": combined}
 
 
 def headers_from_game(game: chess.pgn.GameT) -> Headers:
     headers = Headers(
         date=game.headers["Date"],
         event=game.headers["Event"],
+        round=game.headers["Round"],
         white=game.headers["White"],
         black=game.headers["Black"],
     )
@@ -60,7 +72,7 @@ class Work:
 
     def get_game_data(self):
         return {
-            "headers": self.headers.__dict__,
+            "headers": self.headers.get_headers(),
             "white": self.white_player_info.__dict__,
             "black": self.black_player_info.__dict__,
         }
