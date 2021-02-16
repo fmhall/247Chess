@@ -36,7 +36,7 @@ class WorkQueue:
 
 
 work_queue = WorkQueue()
-work_list = load_games_from_file("famous", num_games=2)
+work_list = load_games_from_file("famous")
 random.shuffle(work_list)
 for work in work_list:
     work_queue.add_work_item(work)
