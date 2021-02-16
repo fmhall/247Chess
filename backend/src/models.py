@@ -17,7 +17,9 @@ def random_string(string_length=8):
 class PlayerInfo:
     name: str
     sub_text: str = "???? - ????"
-    image_url: str = "http://www.osimira.com/wp-content/uploads/2016/02/bgr_11-620x330.jpg"
+    image_url: str = (
+        "http://www.osimira.com/wp-content/uploads/2016/02/bgr_11-620x330.jpg"
+    )
 
 
 @dataclass

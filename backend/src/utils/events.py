@@ -21,6 +21,7 @@ async def status_event_generator(request):
     while True:
         has_annotation = False
         is_new_game = False
+        game_end = False
         if await request.is_disconnected():
             logger.debug("Request disconnected")
             break
@@ -31,6 +32,10 @@ async def status_event_generator(request):
                     data = work.get_update(move_number)
                     if data["anno"]:
                         has_annotation = True
+                    if move_number == len(work.fen_list) - 1:
+                        game_end = True
+                    if game_end and not has_annotation:
+                        data["anno"] = "Game over."
                     yield {
                         "event": "update",
                         "retry": status_stream_retry_timeout,
@@ -57,6 +62,8 @@ async def status_event_generator(request):
 
         if is_new_game:
             delay = 2
+        elif game_end:
+            delay = 5
         elif has_annotation:
             delay = 20
         elif move_number < 15:

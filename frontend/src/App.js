@@ -51,41 +51,41 @@ function App() {
         mount()}, [])
     return (
     <div className="App">
-        <Row className="height-style">
-            <Col className="board-col">
+        <Row>
+            <div className="board-col">
                   <Col lg="6" className="col-4 d-flex justify-content-center text-center">
                       <Row className="board">
                           <Chessground fen={currentFen} lastMove={lastMove}/>
                       </Row>
                     </Col>
-            </Col>
+            </div>
             <Col className="headers-and-annotation-col">
                 {headers && whitePlayer && blackPlayer ? (
-                    <Row lg={1} className="text-middle">
+                    <div className="text-middle">
                         <Row>
                               <Col>
-                                  <img src={whitePlayer.image_url} alt={"white"} width="180vh" height="180vh" />
+                                  <img src={whitePlayer.image_url.startsWith("http://www.osimira") ? 'hoodie_guy.jpg' : whitePlayer.image_url} alt={"white"} width="180vh" height="180vh" />
                               </Col>
                               <Col>
-                                  <img src={blackPlayer.image_url} alt={"black"} width="180vh" height="180vh" />
+                                  <img src={blackPlayer.image_url.startsWith("http://www.osimira") ? 'hoodie_guy.jpg' : blackPlayer.image_url} alt={"black"} width="180vh" height="180vh" />
                               </Col>
-                          </Row>
-                          <Row>
-                              <Col>
-                                  {whitePlayer.name}
-                              </Col>
+                        </Row>
+                        <Row className="names">
+                          <Col>
+                              {whitePlayer.name}
+                          </Col>
 
-                              <Col>
-                                  {blackPlayer.name}
-                              </Col>
-                          </Row>
-                        <Row>
-                            {headers.date.includes('?') ? null : headers.date}
+                          <Col>
+                              {blackPlayer.name}
+                          </Col>
+                        </Row>
+                        <Row className="date">
+                            {headers.date.includes('?') ? headers.date.slice(0, headers.date.indexOf('.?')) : headers.date}
                         </Row>
                         <Row className="text-center text-wrap annotation">
                             {lastAnno}
                         </Row>
-                  </Row>) : (<></>)}
+                  </div>) : (<></>)}
             </Col>
         </Row>
     </div>
