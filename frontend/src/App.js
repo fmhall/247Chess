@@ -84,7 +84,7 @@ function App() {
                     ) : (<></>)}
 
                 </div>
-                <Col className="headers-and-annotation-col">
+                <div className="headers-and-annotation-col">
                     {headers && whitePlayer && blackPlayer ? (
                         <div>
                             <Row className="date">
@@ -94,7 +94,7 @@ function App() {
                                 {lastAnno}
                             </Row>
                         </div>) : (<></>)}
-                </Col>
+                </div>
             </Row>
         </div>
     );

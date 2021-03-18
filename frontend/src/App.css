@@ -31,16 +31,17 @@
 }
 
 .annotation {
-  font-size: 20px;
+  font-size: 30px;
   color: white;
-  height: 5vh;
+  height: 100%;
   align-items: center;
   justify-content: center;
-  padding: 5%;
+  display: flex;
+  text-align: center;
 }
 
 .date {
-  font-size: 25px;
+  font-size: 40px;
   color: white;
   align-items: center;
   justify-content: center;
@@ -67,9 +68,10 @@
 }
 .headers-and-annotation-col {
   padding-top: 50px;
-  padding-left: 100px;
-  width: 500px;
-  align-items: center;
+  padding-bottom: 50px;
+  padding-left: 70px;
+  /*align-items: center;*/
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  display: flex;
+  width: 400px;
 }
