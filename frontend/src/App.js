@@ -3,8 +3,8 @@
 import './App.css';
 import Chessground from 'react-chessground'
 import 'react-chessground/dist/styles/chessground.css'
-import React, {useState, useEffect} from "react";
-import { Row, Col, Container } from 'react-bootstrap';
+import React, {useEffect, useState} from "react";
+import {Col, Row} from 'react-bootstrap';
 
 function App() {
     const [update, setUpdate] = useState(null);
@@ -27,7 +27,7 @@ function App() {
 
     function mount() {
         const evtSource = new EventSource("http://127.0.0.1:8000/status/stream");
-        evtSource.addEventListener("update", function(event) {
+        evtSource.addEventListener("update", function (event) {
             // Logic to handle status updates
             let obj = JSON.parse(event.data)
             setUpdate(obj)
@@ -36,59 +36,67 @@ function App() {
             if (obj.fen) {
                 setCurrentFen(obj.fen)
             }
-            });
-        evtSource.addEventListener("end", function(event) {
+        });
+        evtSource.addEventListener("end", function (event) {
             console.log('Handling end....')
             evtSource.close();
         });
-        evtSource.addEventListener("new_game", function(event) {
+        evtSource.addEventListener("new_game", function (event) {
             console.log('Handling new_game....')
             onNewHeaders(JSON.parse(event.data))
         });
 
     }
-    useEffect(() => {
-        mount()}, [])
-    return (
-    <div className="App">
-        <Row>
-            <div className="board-col">
-                  <Col lg="6" className="col-4 d-flex justify-content-center text-center">
-                      <Row className="board">
-                          <Chessground fen={currentFen} lastMove={lastMove}/>
-                      </Row>
-                    </Col>
-            </div>
-            <Col className="headers-and-annotation-col">
-                {headers && whitePlayer && blackPlayer ? (
-                    <div className="text-middle">
-                        <Row>
-                              <Col>
-                                  <img src={whitePlayer.image_url.startsWith("http://www.osimira") ? 'hoodie_guy.jpg' : whitePlayer.image_url} alt={"white"} width="180vh" height="180vh" />
-                              </Col>
-                              <Col>
-                                  <img src={blackPlayer.image_url.startsWith("http://www.osimira") ? 'hoodie_guy.jpg' : blackPlayer.image_url} alt={"black"} width="180vh" height="180vh" />
-                              </Col>
-                        </Row>
-                        <Row className="names">
-                          <Col>
-                              {whitePlayer.name}
-                          </Col>
 
-                          <Col>
-                              {blackPlayer.name}
-                          </Col>
+    useEffect(() => {
+        mount()
+    }, [])
+    return (
+        <div className="App">
+            <Row className="main-row">
+                <div className="board-col">
+                    <Col lg="6" className="col-4 d-flex justify-content-center text-center">
+                        <Row className="board">
+                            <Chessground fen={currentFen} lastMove={lastMove}/>
                         </Row>
-                        <Row className="date">
-                            {headers.combined}
-                        </Row>
-                        <Row className="text-center text-wrap annotation">
-                            {lastAnno}
-                        </Row>
-                  </div>) : (<></>)}
-            </Col>
-        </Row>
-    </div>
+                    </Col>
+                </div>
+                <div className="photos">
+                    {headers && whitePlayer && blackPlayer ? (
+                        <>
+                            <Row>
+                                <img
+                                    src={blackPlayer.image_url.startsWith("http://www.osimira") ? 'hoodie_guy.jpg' : blackPlayer.image_url}
+                                    alt={"black"} width="180" height="180"/>
+                            </Row>
+                            <Row className="names">
+                                {blackPlayer.name}
+                            </Row>
+                            <Row>
+                                <img
+                                    src={whitePlayer.image_url.startsWith("http://www.osimira") ? 'hoodie_guy.jpg' : whitePlayer.image_url}
+                                    alt={"white"} width="180" height="180"/>
+                            </Row>
+                            <Row className="names">
+                                {whitePlayer.name}
+                            </Row>
+                        </>
+                    ) : (<></>)}
+
+                </div>
+                <Col className="headers-and-annotation-col">
+                    {headers && whitePlayer && blackPlayer ? (
+                        <div>
+                            <Row className="date">
+                                {headers.combined}
+                            </Row>
+                            <Row className="text-center text-wrap annotation">
+                                {lastAnno}
+                            </Row>
+                        </div>) : (<></>)}
+                </Col>
+            </Row>
+        </div>
     );
 }
 
