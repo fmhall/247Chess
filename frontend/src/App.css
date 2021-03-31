@@ -2,16 +2,26 @@
   text-align: center;
   background-color: #282c34;
   color: white;
-  display: flex;
-  flex-direction: column;
   /*align-items: center;*/
   /*justify-content: center;*/
   height: 100%;
   min-height: 500vh;
 }
+.main {
+  flex-direction: row;
+  justify-content: flex-start;
+  display: flex;
+  /*width: 1000px;*/
+}
+
 
 .main-row {
-  display: inline-block;
+  padding-top: 30px;
+  padding-left: 30px;
+  flex-direction: row;
+  justify-content: flex-start;
+  display: flex;
+  width: 100%;
 }
 
 .text-middle {
@@ -20,8 +30,7 @@
 }
 
 .board-col {
-  padding: 50px;
-  margin-left: 1%;
+  /*margin-left: 1%;*/
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,13 +40,14 @@
 }
 
 .annotation {
-  font-size: 30px;
   color: white;
   height: 100%;
   align-items: center;
   justify-content: center;
   display: flex;
   text-align: center;
+  font-size: 20px;
+  padding-left: 10px;
 }
 
 .date {
@@ -48,30 +58,41 @@
 }
 
 .names {
+  display: flex;
   font-size: 30px;
   color: white;
-  text-align: center;
+  justify-content: center;
   width: 180px;
 }
 
 .height-style {
   height: 60vh;
 }
-.photos {
-  padding-top: 50px;
+.photos-col {
   flex-direction: column;
   justify-content: space-between;
-  height: 562px;
   display: flex;
-  text-align: center;
-  flex-grow: 0;
 }
+
+.player {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  padding-left: 25px;
+}
+
 .headers-and-annotation-col {
   padding-top: 50px;
   padding-bottom: 50px;
-  padding-left: 70px;
-  /*align-items: center;*/
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
   display: flex;
   width: 400px;
 }
+
+.pl {
+  padding-left: 20px;
+  width: 200px;
+}
+

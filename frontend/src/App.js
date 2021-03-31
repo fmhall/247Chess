@@ -4,7 +4,7 @@ import './App.css';
 import Chessground from 'react-chessground'
 import 'react-chessground/dist/styles/chessground.css'
 import React, {useEffect, useState} from "react";
-import {Col, Row} from 'react-bootstrap';
+import {Col, Container, Row} from 'react-bootstrap';
 
 function App() {
     const [update, setUpdate] = useState(null);
@@ -53,49 +53,56 @@ function App() {
     }, [])
     return (
         <div className="App">
-            <Row className="main-row">
-                <div className="board-col">
-                    <Col lg="6" className="col-4 d-flex justify-content-center text-center">
-                        <Row className="board">
-                            <Chessground fen={currentFen} lastMove={lastMove}/>
-                        </Row>
-                    </Col>
-                </div>
-                <div className="photos">
-                    {headers && whitePlayer && blackPlayer ? (
-                        <>
-                            <Row>
-                                <img
-                                    src={blackPlayer.image_url.startsWith("http://www.osimira") ? 'hoodie_guy.jpg' : blackPlayer.image_url}
-                                    alt={"black"} width="180" height="180"/>
+            <div className="main">
+                <Row className="main-row">
+                    <div className="col-md-auto">
+                        <Col className="">
+                            <Row className="board">
+                                <Chessground fen={currentFen} lastMove={lastMove}/>
                             </Row>
-                            <Row className="names">
-                                {blackPlayer.name}
-                            </Row>
-                            <Row>
-                                <img
-                                    src={whitePlayer.image_url.startsWith("http://www.osimira") ? 'hoodie_guy.jpg' : whitePlayer.image_url}
-                                    alt={"white"} width="180" height="180"/>
-                            </Row>
-                            <Row className="names">
-                                {whitePlayer.name}
-                            </Row>
-                        </>
-                    ) : (<></>)}
+                        </Col>
+                    </div>
 
-                </div>
-                <div className="headers-and-annotation-col">
-                    {headers && whitePlayer && blackPlayer ? (
-                        <div>
-                            <Row className="date">
-                                {headers.combined}
-                            </Row>
-                            <Row className="text-center text-wrap annotation">
-                                {lastAnno}
-                            </Row>
-                        </div>) : (<></>)}
-                </div>
-            </Row>
+                    <div className="col-md-auto pl col-md-offset-2 photos-col">
+                        {headers && whitePlayer && blackPlayer ? (
+                            <>
+                                <Row className="player">
+                                    <Row>
+                                        <img
+                                            src={blackPlayer.image_url.startsWith("http://www.osimira") ? 'hoodie_guy.jpg' : blackPlayer.image_url}
+                                            alt={"black"} width="180" height="180"/>
+                                    </Row>
+                                    <Row className="names">
+                                        {blackPlayer.name}
+                                    </Row>
+                                </Row>
+                                <Row className="player">
+                                    <Row>
+                                        <img
+                                            src={whitePlayer.image_url.startsWith("http://www.osimira") ? 'hoodie_guy.jpg' : whitePlayer.image_url}
+                                            alt={"white"} width="180" height="180"/>
+                                    </Row>
+                                    <Row className="names">
+                                        {whitePlayer.name}
+                                    </Row>
+                                </Row>
+                            </>
+                        ) : (<></>)}
+
+                    </div>
+                    <div className="headers-and-annotation-col">
+                        {headers && whitePlayer && blackPlayer ? (
+                            <div>
+                                <Row className="date">
+                                    {headers.combined}
+                                </Row>
+                                <Row className="text-center text-wrap annotation">
+                                    {lastAnno}
+                                </Row>
+                            </div>) : (<></>)}
+                    </div>
+                </Row>
+            </div>
         </div>
     );
 }
