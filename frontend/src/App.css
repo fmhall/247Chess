@@ -72,6 +72,7 @@
   flex-direction: column;
   justify-content: space-between;
   display: flex;
+  height: 542px;
 }
 
 .player {
