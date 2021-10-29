@@ -11,7 +11,7 @@ logger.setLevel("DEBUG")
 """
 Get status as an event generator
 """
-status_stream_delay = 8  # second
+status_stream_delay = 4  # second
 status_stream_retry_timeout = 30000  # milisecond
 
 
@@ -69,5 +69,5 @@ async def status_event_generator(request):
         elif move_number < 15:
             delay = 5 + random.randint(-2, 2)
         else:
-            delay = status_stream_delay + random.randint(-5, 5)
+            delay = status_stream_delay + random.randint(-3, 3)
         await asyncio.sleep(delay)
